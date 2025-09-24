@@ -2,7 +2,7 @@
 #include "engine.h"
 
 int main() {
-    Engine e = Engine();
+    Engine e;
     e.run();
     
     return 0;

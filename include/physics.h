@@ -2,13 +2,18 @@
 #define PHYSICS_H
 
 #include <vector>
-#include "entitys.h"
+#include "raylib.h"
+#include "raymath.h"
+
+#include "entities.h"
 
 class PhysicsEngine {
     private:
     std::vector<PhysicsEntity*> enities;
     int entity_count = 0;
     float tps = 60;
+    
+    float gravity = 9.8f;
 
     public:
     PhysicsEngine();
