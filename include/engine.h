@@ -7,6 +7,7 @@
 #include <chrono>
 
 #include "physics.h"
+#include "logger.h"
 
 class Engine {
     private:
@@ -17,6 +18,9 @@ class Engine {
 
     bool physics_running = false;
     std::mutex physics_running_mtx;
+
+    bool closed = false;
+    std::mutex closed_mtx;
 
     void thread_func();
 
