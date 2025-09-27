@@ -10,6 +10,24 @@ class Entity {
     Entity();
 };
 
+class StaticEntity : public Entity {
+    private:
+    Vector2 pos;
+    Vector2 size;
+
+    public:
+    StaticEntity();
+    StaticEntity(Vector2 pos, Vector2 size);
+
+    virtual void debugRender() = 0;
+
+    Vector2 getSize();
+    void setSize(Vector2 pos);
+
+    Vector2 getPos();
+    void setPos(Vector2 pos);
+};
+
 class PhysicsEntity : public Entity {
     private:
     Vector2 pos;
