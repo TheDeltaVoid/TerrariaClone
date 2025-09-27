@@ -10,6 +10,7 @@
 #include "physics.h"
 #include "logger.h"
 #include "game.h"
+#include "tilemap.h"
 
 class Engine {
     private:
@@ -26,6 +27,9 @@ class Engine {
 
     std::vector<PhysicsEntity*> entities;
     std::mutex entities_mtx;
+
+    Tilemap tilemap;
+    std::mutex tilemap_mtx;
 
     float tps = 240;
 

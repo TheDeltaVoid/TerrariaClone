@@ -1,11 +1,13 @@
 #include "engine.h"
 
 Engine::Engine() {
-    // SetConfigFlags(FLAG_FULLSCREEN_MODE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
-    // InitWindow(1920, 1080, "Terraria Clone");
+    Logger().log_info("Engine: Initializing");
+    // Raylib init
+    SetConfigFlags(FLAG_FULLSCREEN_MODE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
+    InitWindow(1920, 1080, "Terraria Clone");
 
-    SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
-    InitWindow(600, 600, "Terraria Clone");
+    // SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
+    // InitWindow(600, 600, "Terraria Clone");
 
     physics_engine = PhysicsEngine();
 
@@ -14,6 +16,9 @@ Engine::Engine() {
     entities.push_back(p);
 
     physics_engine.addEntity(entities[index]);
+
+    tilemap.loadFromFile("C:\\Users\\Simon\\Desktop\\coding\\CPP\\Terraria Clone\\res\\world.old");
+    physics_engine.addTilemap(&tilemap);
 
     // SetTargetFPS(100);
 
@@ -33,7 +38,11 @@ void Engine::run() {
         BeginDrawing();
         ClearBackground(BLACK);
 
-        physics_engine.debugRender();
+        {
+            std::lock_guard<std::mutex> lock(tilemap_mtx);
+
+            physics_engine.debugRender();
+        }
 
         DrawFPS(10, 10);
         EndDrawing();
@@ -113,6 +122,7 @@ void Engine::thread_func() {
 
         {
             std::lock_guard<std::mutex> lock(physics_engine_mtx);
+            std::lock_guard<std::mutex> lock2(tilemap_mtx);
 
             physics_engine.step();
 
@@ -134,9 +144,7 @@ void Engine::thread_func() {
                 if (catchup_time <= sleep_time) {
                     sleep_time -= catchup_time;
                     catchup_time = 0;
-                }
-
-                else {
+                } else {
                     catchup_time -= sleep_time;
                     sleep_time = 0;
                 }
@@ -145,9 +153,7 @@ void Engine::thread_func() {
             if (sleep_time > 0) {
                 std::this_thread::sleep_for(std::chrono::milliseconds((int)(sleep_time * 1000)));
             }
-        }
-
-        else if (frame_time > desired_time) {
+        } else if (frame_time > desired_time) {
             catchup_time += frame_time - desired_time;
         }
 

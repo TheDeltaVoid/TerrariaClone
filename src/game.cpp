@@ -1,8 +1,8 @@
 #include "game.h"
 
 Player::Player() {
-    setSize(Vector2({50, 50}));
-    setPos(Vector2({200, 200}));
+    setSize(Vector2({1, 1}));
+    setPos(Vector2({0, 0}));
 
     setMass(10.0f);
     setDamp(0.80f);

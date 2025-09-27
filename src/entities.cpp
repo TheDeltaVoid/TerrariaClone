@@ -4,12 +4,14 @@ Entity::Entity () {}
 
 PhysicsEntity::PhysicsEntity() {};
 
-PhysicsEntity::PhysicsEntity(Vector2 pos, Vector2 size, float mass, float damp) {
+PhysicsEntity::PhysicsEntity(Vector2 pos, Vector2 size, float mass, float damp, bool is_static) {
     this->pos = pos;
     this->size = size;
 
     this->mass = mass;
     this->damp = damp;
+
+    this->is_static = is_static;
 }
 
 void PhysicsEntity::setSize(Vector2 size) { this->size = size; };
@@ -31,15 +33,4 @@ void PhysicsEntity::setMass(float mass) { this->mass = mass; };
 float PhysicsEntity::getDamp() { return damp; };
 void PhysicsEntity::setDamp(float damp) { this->damp = damp; };
 
-StaticEntity::StaticEntity() {};
-
-StaticEntity::StaticEntity(Vector2 pos, Vector2 size) {
-    this->pos = pos;
-    this->size = size;
-}
-
-Vector2 StaticEntity::getSize() { return size; };
-void StaticEntity::setSize(Vector2 size) { this->size = size; };
-
-Vector2 StaticEntity::getPos() { return pos; };
-void StaticEntity::setPos(Vector2 pos) { this->pos = pos; };
+bool PhysicsEntity::isStatic() { return is_static; };

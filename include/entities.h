@@ -7,25 +7,9 @@
 class Entity {
     private:
     public:
-    Entity();
-};
-
-class StaticEntity : public Entity {
-    private:
-    Vector2 pos;
-    Vector2 size;
-
-    public:
-    StaticEntity();
-    StaticEntity(Vector2 pos, Vector2 size);
-
+    virtual void update() = 0;
     virtual void debugRender() = 0;
-
-    Vector2 getSize();
-    void setSize(Vector2 pos);
-
-    Vector2 getPos();
-    void setPos(Vector2 pos);
+    Entity();
 };
 
 class PhysicsEntity : public Entity {
@@ -40,9 +24,11 @@ class PhysicsEntity : public Entity {
     float mass;
     float damp;
 
+    bool is_static = false;
+
     public:
     PhysicsEntity();
-    PhysicsEntity(Vector2 pos, Vector2 size, float mass = 1, float damp = 1);
+    PhysicsEntity(Vector2 pos, Vector2 size, float mass = 1, float damp = 1, bool is_static = false);
 
     virtual void debugRender() = 0;
     virtual void update() = 0;
@@ -65,6 +51,8 @@ class PhysicsEntity : public Entity {
 
     float getDamp();
     void setDamp(float damp);
+
+    bool isStatic();
 };
 
 #endif
