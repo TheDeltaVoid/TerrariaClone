@@ -5,9 +5,11 @@
 #include <thread>
 #include <mutex>
 #include <chrono>
+#include <vector>
 
 #include "physics.h"
 #include "logger.h"
+#include "game.h"
 
 class Engine {
     private:
@@ -21,6 +23,11 @@ class Engine {
 
     bool closed = false;
     std::mutex closed_mtx;
+
+    std::vector<PhysicsEntity*> entities;
+    std::mutex entities_mtx;
+
+    float tps = 240;
 
     void thread_func();
 

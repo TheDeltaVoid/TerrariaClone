@@ -23,9 +23,14 @@ class PhysicsEntity : public Entity {
     float damp;
 
     public:
+    PhysicsEntity();
     PhysicsEntity(Vector2 pos, Vector2 size, float mass = 1, float damp = 1);
 
-    void debugRender();
+    virtual void debugRender() = 0;
+    virtual void update() = 0;
+
+    void setSize(Vector2 pos);
+    Vector2 getSize();
 
     void setPos(Vector2 pos);
     Vector2 getPos();
@@ -38,7 +43,10 @@ class PhysicsEntity : public Entity {
     Vector2 getForce();
 
     float getMass();
+    void setMass(float mass);
+
     float getDamp();
+    void setDamp(float damp);
 };
 
 #endif

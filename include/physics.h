@@ -11,9 +11,8 @@ class PhysicsEngine {
     private:
     std::vector<PhysicsEntity*> enities;
     int entity_count = 0;
-    float tps = 60;
     
-    float gravity = 9.8f;
+    float gravity = 0.0f;
 
     public:
     PhysicsEngine();
